@@ -1,11 +1,12 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'http://dataservice.accuweather.com',
+    baseURL: 'https://dataservice.accuweather.com',
      params: {
         // apikey: 'Mutb4NaA3Kqzol0SYXrfG968f2AQsA84',
         // apikey: 'wwLCaHmLbcG1p1qjSVeBOZRJjEoUOABQ',
-        apikey: 'DA89UW5pNtuvckCm87g94ZK6jn78zvHA',
+        // apikey: 'DA89UW5pNtuvckCm87g94ZK6jn78zvHA',
+        apikey: 'PblWy4dLUDW85h18ILYMkO0nYHcaf8Vh',
     }
 })
 
