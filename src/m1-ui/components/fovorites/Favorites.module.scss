@@ -1,0 +1,44 @@
+@import './src/m1-ui/common/mixins';
+
+.favorites {
+  @include flex(column, flex-start, flex-start, wrap);
+  margin: 20px;
+  height: 100vh;
+  border: 1px solid black;
+  background: #f09c2d;
+
+  .img {
+    width: 60%;
+  }
+
+  .citiesBox {
+    @include flex(row, center, flex-start, no wrap);
+    width: 100%;
+    margin: 10px 0;
+
+    .cityBox {
+      min-width: 180px;
+      width: 20%;
+      height: auto;
+      border: solid 1px black;
+      margin: 5px;
+
+      .celsius {
+        height: 15px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    height: 100%;
+  }
+
+  @media screen and (max-width: 1200px) {
+
+    .daysBox {
+      flex-wrap: wrap;
+    }
+  }
+
+  width: 90vw;
+}

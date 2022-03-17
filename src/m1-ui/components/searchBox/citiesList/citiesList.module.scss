@@ -1,0 +1,12 @@
+.cities_list {
+  width: 100%;
+  max-width: 360px;
+  background: lightgrey;
+  position: absolute;
+  top: 100px;
+  .city_name_block {
+    :hover {
+      background: darkgray;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import './src/m1-ui/common/mixins';
+
+.searchContainer {
+  @include flex(row, center, flex-start, nowrap );
+  padding: 20px;
+  position: relative;
+  .input {
+    display: flex;
+    flex-direction: column;
+  }
+  .button {
+    margin: 8px;
+    font-family: 'Merienda', cursive;
+  }
+}

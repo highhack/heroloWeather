@@ -1,0 +1,18 @@
+@import './src/m1-ui/common/mixins';
+
+.nav {
+  @include flex(row, space-between, center ,nowrap );
+  width: auto;
+  margin: 10px 20px 0 20px;
+  height: 60px;
+  border: 1px solid black;
+  background: #f09c2d;
+  .nav_block {
+    @include flex(row, space-between, center ,nowrap );
+    margin: 0 16px;
+    width: 220px;
+  }
+  .active {
+    margin: 10px;
+  }
+}
