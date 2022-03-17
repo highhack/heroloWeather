@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/heroloWeather/static/css/main.66f40f6a.css",
-    "main.js": "/heroloWeather/static/js/main.e06bd780.js",
+    "main.js": "/heroloWeather/static/js/main.ce9f8c8e.js",
     "static/js/787.28cb0dcd.chunk.js": "/heroloWeather/static/js/787.28cb0dcd.chunk.js",
     "static/media/IuF.gif": "/heroloWeather/static/media/IuF.9bb8d41ea9e4e224bb4c.gif",
     "static/media/background3.gif": "/heroloWeather/static/media/background3.32d6062ca19ec5988240.gif",
@@ -12,11 +12,11 @@
     "static/media/darkClouds.png": "/heroloWeather/static/media/darkClouds.55987e94b8fd660bfff0.png",
     "index.html": "/heroloWeather/index.html",
     "main.66f40f6a.css.map": "/heroloWeather/static/css/main.66f40f6a.css.map",
-    "main.e06bd780.js.map": "/heroloWeather/static/js/main.e06bd780.js.map",
+    "main.ce9f8c8e.js.map": "/heroloWeather/static/js/main.ce9f8c8e.js.map",
     "787.28cb0dcd.chunk.js.map": "/heroloWeather/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.66f40f6a.css",
-    "static/js/main.e06bd780.js"
+    "static/js/main.ce9f8c8e.js"
   ]
 }
