@@ -23,16 +23,15 @@ const Favorites = React.memo((props: typeProps) => {
     //     let newCitiesList: Array<{ name: string, currentWeather: CurrentWeatherDataType }> = []
     //     cities.length === 0 && favoritesCitiesList
     //         .forEach((city: { cityName: string, cityKey: string }) => {
-    //                 debugger
     //                 weatherAPI.getCurrentWeatherByCity(city.cityKey)
     //                     .then(res => {
-    //                         debugger
     //                         newCitiesList.push({name: city.cityName, currentWeather: res.data})
+    //                         dispatch(favoritesCitiesListAC(newCitiesList))
     //                     })
     //                     .catch(err => console.log(err))
     //             }
     //         )
-    //     debugger
+    //
     //     console.log(newCitiesList)
     //     dispatch(favoritesCitiesListAC(newCitiesList))
     //

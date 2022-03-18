@@ -14,7 +14,6 @@ export  type typeProps = {
 const Board = React.memo((props: typeProps) => {
     const weather = useSelector<AppRootStateType, any>(state => state.weather.weather)
     const currentCity = useSelector<AppRootStateType, { name: string, key: string }>(state => state.weather.currentCity)
-    const searchError = useSelector<AppRootStateType, boolean>(state => state.weather.searchError)
     let dispatch = useDispatch()
 
 
@@ -30,6 +29,7 @@ const Board = React.memo((props: typeProps) => {
             {weather === null
                 ? <div>{}</div>
                 : <div>
+                    <SearchBox/>
                     <div className={s.daysBox}>
                         {weather.DailyForecasts.map((n:listData, index: number) => {
                                 return <div key={index} className={s.dayBox}>
@@ -53,7 +53,6 @@ const Board = React.memo((props: typeProps) => {
                             }
                         )}
                     </div>
-                    <SearchBox/>
                 </div>
                }
         </div>

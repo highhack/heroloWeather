@@ -52,7 +52,6 @@ export const weatherReducer = (state: InitialStateType = initialState, action: A
         case 'SET-CURRENT-CITY':
             return {...state, currentCity: action.currentCity}
         case 'SET-FAVORITE-LIST':
-            debugger
              let a = {...state, favoritesCitiesList: action.favoritesCitiesList}
              return a
         default:
@@ -103,9 +102,9 @@ export const setWeatherTC = (cityKey: string) => {
             )
             .catch((error) => {
                 dispatch(setSearchErrorAC(true))
-                dispatch(setTextHelperAC(error.response.data.message))
+                dispatch(setTextHelperAC('Wrong name of city'))
                 dispatch(setLoadingStatusAC('succeeded'))
-                console.log(error.message)
+                // console.log(error.response.data.Message)
             })
     }
 }

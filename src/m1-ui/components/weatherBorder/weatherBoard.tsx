@@ -30,7 +30,7 @@ const WeatherBoard = React.memo((props: typeProps) => {
                 setIsAddedToFavorites(false)
             }
             else {
-                favoritesCitiesList.some((city: { name: string, key: string }) => city.name === currentCity.name)
+                favoritesCitiesList.some((city: { cityName: string, cityKey: string }) => city.cityName === currentCity.name)
                 ? setIsAddedToFavorites(true)
                 : setIsAddedToFavorites(false)
             }

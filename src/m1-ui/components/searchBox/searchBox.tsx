@@ -7,10 +7,10 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import CitiesList, {CityProps} from "./citiesList/citiesList";
 
 
-const SearchBox = React.memo(() => {
+const SearchBox = () => {
 
-    const searchError = useSelector<AppRootStateType, boolean>(state => state.weather.searchError)
-    const textHelper = useSelector<AppRootStateType, string>(state => state.weather.textHelper)
+    // const searchError = useSelector<AppRootStateType, boolean>(state => state.weather.searchError)
+    // const textHelper = useSelector<AppRootStateType, string>(state => state.weather.textHelper)
     const cityList = useSelector<AppRootStateType,Array<CityProps> | null>(state => state.weather.searchedCityList)
     let dispatch = useDispatch()
     const [citySearch, setCitySearch] = useState('')
@@ -47,11 +47,11 @@ const SearchBox = React.memo(() => {
                         variant="outlined"
                         color="secondary"
                         value={citySearch}
-                        error={searchError}
+                        // error={searchError}
                         onKeyDown={onKeyDown}
                         onChange={onHandler}
                     />
-                    <FormHelperText style={{color:'red', fontFamily: `'Merienda', cursive`}}>{textHelper}</FormHelperText>
+                    {/*<FormHelperText style={{color:'red', fontFamily: `'Merienda', cursive`}}>{textHelper}</FormHelperText>*/}
                 </div>
                 <Button
                     style={{fontFamily: `'Merienda', cursive`}}
@@ -66,6 +66,6 @@ const SearchBox = React.memo(() => {
         </div>
 
     )
-});
+};
 
 export default SearchBox;
