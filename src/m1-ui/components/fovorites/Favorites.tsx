@@ -17,25 +17,21 @@ const Favorites = React.memo((props: typeProps) => {
     const dispatch = useDispatch()
     const cities = useSelector<AppRootStateType, any>(state => state.weather.favoritesCitiesList)
     let favoritesCitiesList = JSON.parse(localStorage.getItem('cities') as string)
-    // let cities: Array<{name: string, cityWeather: CurrentWeatherDataType}> = []
-    // const [cities, setCities]: any = useState([])
-    // useEffect(() => {
-    //     let newCitiesList: Array<{ name: string, currentWeather: CurrentWeatherDataType }> = []
-    //     cities.length === 0 && favoritesCitiesList
-    //         .forEach((city: { cityName: string, cityKey: string }) => {
-    //                 weatherAPI.getCurrentWeatherByCity(city.cityKey)
-    //                     .then(res => {
-    //                         newCitiesList.push({name: city.cityName, currentWeather: res.data})
-    //                         dispatch(favoritesCitiesListAC(newCitiesList))
-    //                     })
-    //                     .catch(err => console.log(err))
-    //             }
-    //         )
-    //
-    //     console.log(newCitiesList)
-    //     dispatch(favoritesCitiesListAC(newCitiesList))
-    //
-    // }, [])
+    let newCitiesList: Array<{ name: string, currentWeather: CurrentWeatherDataType }> = []
+    const a = async () => {
+        for (let city of favoritesCitiesList) {
+            await weatherAPI.getCurrentWeatherByCity(city.cityKey).then((res) => {
+                newCitiesList.push({name: city.cityName, currentWeather: res.data})
+            })
+        }
+        Promise.all(newCitiesList).then(() => dispatch(favoritesCitiesListAC(newCitiesList)))
+
+    }
+
+    useEffect(() => {
+        debugger
+        favoritesCitiesList && a()
+    }, [])
 
 
     const image = props.image
@@ -43,24 +39,24 @@ const Favorites = React.memo((props: typeProps) => {
     return (
         <div className={s.favorites}>
             <Preloader loading={loading}/>
-            {localStorage === null
+            {favoritesCitiesList === null
                 ? <div>Add Cities for your favorites</div>
-                : <div className={s.citesBox}>
-                    <div className={s.citiesBox}>
-                        {cities && cities.map((c: any) => {
-                            return (
-                                <div className={s.cityBox} key={c.name}>
-                                    <h1>{c.name}</h1>
-                                    <img className={s.img} alt={''} src={image(c.cityWeather[0].WeatherIcon)}/>
-                                    <div>{c.cityWeather[0].WeatherText}</div>
-                                    <div className={s.temp}>
-                                        <h1>{Math.floor(c.cityWeather[0].Temperature.Metric.Value)}<sup>o</sup>C</h1>
-                                    </div>
+                : cities.length !== 0 && <div className={s.citesBox}>
+                <div className={s.citiesBox}>
+                    {cities && cities.map((c: any) => {
+                        return (
+                            <div className={s.cityBox} key={c.name}>
+                                <h1>{c.name}</h1>
+                                <img className={s.img} alt={''} src={image(c.currentWeather[0].WeatherIcon)}/>
+                                <div>{c.currentWeather[0].WeatherText}</div>
+                                <div className={s.temp}>
+                                    <h1>{Math.floor(c.currentWeather[0].Temperature.Metric.Value)}<sup>o</sup>C</h1>
                                 </div>
-                            )
-                        })}
-                    </div>
+                            </div>
+                        )
+                    })}
                 </div>
+            </div>
 
             }
         </div>

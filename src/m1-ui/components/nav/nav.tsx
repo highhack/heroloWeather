@@ -5,14 +5,14 @@ import {NavLink, Switch} from 'react-router-dom';
 
 const Nav = React.memo(() => {
     return (
-        <Switch>
+        // <Switch>
         <nav className={s.nav}>
             <div className={s.nav_block}>
                 Weather
             </div>
             <div className={s.nav_block}>
                 <div className={s.item}>
-                    <NavLink to='/' activeClassName={s.active}>Weather</NavLink>
+                    <NavLink to='/heroloWeather' activeClassName={s.active}>Weather</NavLink>
                 </div>
                 <div className={s.item}>
                     <NavLink to='/favorites' activeClassName={s.active}>Favorites</NavLink>
@@ -22,7 +22,7 @@ const Nav = React.memo(() => {
                 </div>
             </div>
         </nav>
-         </Switch>
+         // </Switch>
     )
 });
 

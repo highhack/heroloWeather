@@ -11,9 +11,9 @@ import { store } from './m2-bll/store';
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <HashRouter>
+            {/*<HashRouter>*/}
                 <App/>
-            </HashRouter>
+            {/*</HashRouter>*/}
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

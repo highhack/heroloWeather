@@ -4,10 +4,10 @@ const instance = axios.create({
     baseURL: 'https://dataservice.accuweather.com',
      params: {
         // apikey: 'Mutb4NaA3Kqzol0SYXrfG968f2AQsA84',
-        // apikey: 'wwLCaHmLbcG1p1qjSVeBOZRJjEoUOABQ',
+        apikey: 'wwLCaHmLbcG1p1qjSVeBOZRJjEoUOABQ',
         // apikey: 'DA89UW5pNtuvckCm87g94ZK6jn78zvHA',
         // apikey: 'PblWy4dLUDW85h18ILYMkO0nYHcaf8Vh',
-         apikey: 'x5AePgIOg4rGymL7UST1h4ALoXglJMXF',
+        // 13.30 apikey: 'x5AePgIOg4rGymL7UST1h4ALoXglJMXF',
     }
 })
 
