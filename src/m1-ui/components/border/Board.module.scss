@@ -1,14 +1,18 @@
 @import './src/m1-ui/common/mixins';
 
 .board {
-  @include flex(column, center, initial, wrap);
+  @include flex(column, center, center, wrap);
   margin: 20px;
-  height: 100vh;
+  height: 90vh;
   border: 1px solid black;
-  background: #f09c2d;
+  //background: #f09c2d;
 
   .img {
     width: 60%;
+  }
+
+  .board_container {
+    margin: 20px;
   }
 
   @media screen and (max-width: 1200px) {

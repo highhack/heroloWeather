@@ -1,10 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent,  useState} from 'react';
-import s from './searchBox.module.scss'
+import s from './SearchBox.module.scss'
 import {setCitiesListTC, setSearchErrorAC, setTextHelperAC, setWeatherTC} from "../../../m2-bll/weatherReducer";
 import {Button,FormHelperText, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import CitiesList, {CityProps} from "./citiesList/citiesList";
+import CitiesList, {CityProps} from "./citiesList/CitiesList";
 
 
 const SearchBox = () => {

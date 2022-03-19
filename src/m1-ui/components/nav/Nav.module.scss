@@ -4,13 +4,16 @@
   @include flex(row, space-between, center ,nowrap );
   width: auto;
   margin: 10px 20px 0 20px;
-  height: 60px;
+  height: 10vh;
   border: 1px solid black;
   background: #f09c2d;
   .nav_block {
     @include flex(row, space-between, center ,nowrap );
     margin: 0 16px;
     width: 220px;
+  }
+  .right_panel {
+    @include flex(row, space-between, center ,nowrap );
   }
   .active {
     margin: 10px;

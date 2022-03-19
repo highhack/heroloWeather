@@ -1,6 +1,6 @@
 import React from "react";
 // import WeatherBoard from "../components/weatherBorder/weatherBoard";
-import Board from "../components/border/board";
+import Board from "../components/border/Board";
 import News from "../components/news/News";
 import clouds from "../common/icons/clouds.png";
 import sun from "../common/icons/clearSky.png";
@@ -8,7 +8,7 @@ import rain from "../common/icons/rain.png";
 import darkClouds from "../common/icons/darkClouds.png";
 import s from './Routes.module.scss'
 import {Route, Switch} from "react-router-dom";
-import WeatherBoard from "../components/weatherBorder/weatherBoard";
+import WeatherBoard from "../components/weatherBorder/WeatherBoard";
 import Favorites from "../components/fovorites/Favorites";
 
 

@@ -1,65 +1,73 @@
-import React, {useEffect, useState} from "react";
-import {setCurrentWeatherTC} from "../../../m2-bll/weatherReducer";
+import React, {useEffect} from "react";
+import {setCurrentWeatherTC, setFavoritesCitiesListAC, setIsAddedToFavoritesAC} from "../../../m2-bll/weatherReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import s from './weatherBoard.module.scss'
+import s from './WeatherBoard.module.scss'
 import backImage from '../../common/background3.gif'
+import backNightImage from '../../common/night.gif'
 import Preloader from "../preloader/Preloader";
 import loading from './../../common/loading.gif'
 import {Button} from "@material-ui/core";
+import {CurrentWeatherDataType} from "../../../types";
 
 
 export  type typeProps = {
     image: (iconNumber: number) => any
 }
 
-const WeatherBoard = React.memo((props: typeProps) => {
-        const currentWeather = useSelector<AppRootStateType, any>(state => state.weather.currentWeather)
+const WeatherBoard = React.memo(({image}: typeProps) => {
+        const currentWeather = useSelector<AppRootStateType, CurrentWeatherDataType | null>(state => state.weather.currentWeather)
         const currentCity = useSelector<AppRootStateType, { name: string, key: string }>(state => state.weather.currentCity)
-        const favoritesCitiesList = JSON.parse(localStorage.getItem('cities') as string) || [];
-        const [isAddedToFavorites, setIsAddedToFavorites] = useState(false)
+        const isAddedToFavorites = useSelector<AppRootStateType, boolean>(state => state.weather.isAddedToFavorites)
+        const favoritesCitiesList = useSelector<AppRootStateType, any>(state => state.weather.favoritesCitiesList)
+        const theme = useSelector<AppRootStateType, boolean>(state => state.weather.theme)
+        const localStorageFavoritesCitiesList = JSON.parse(localStorage.getItem('cities') as string) || [];
         const dispatch = useDispatch()
-
 
         useEffect(() => {
             dispatch(setCurrentWeatherTC(currentCity.key))
         }, [])
 
         useEffect(() => {
-            if (!favoritesCitiesList) {
-                setIsAddedToFavorites(false)
-            }
-            else {
-                favoritesCitiesList.some((city: { cityName: string, cityKey: string }) => city.cityName === currentCity.name)
-                ? setIsAddedToFavorites(true)
-                : setIsAddedToFavorites(false)
-            }
+            localStorageFavoritesCitiesList && localStorageFavoritesCitiesList.some((city: { cityName: string, cityKey: string }) =>
+                city.cityName === currentCity.name)
+                ? dispatch(setIsAddedToFavoritesAC(true))
+                : dispatch(setIsAddedToFavoritesAC(false))
         }, [])
-
-        const image = props.image
 
         const receiveDate = (str: string) => {
             return str.substr(0, 10)
         }
 
         const addToFavorites = () => {
-            favoritesCitiesList.push({cityName: currentCity.name, cityKey: currentCity.key})
-            localStorage.setItem('cities', JSON.stringify(favoritesCitiesList));
-            setIsAddedToFavorites(true)
+            localStorageFavoritesCitiesList.push({cityName: currentCity.name, cityKey: currentCity.key})
+            localStorage.setItem('cities', JSON.stringify(localStorageFavoritesCitiesList));
+            const newFavoriteCity = {name: currentCity.name, key: currentCity.key, currentWeather: currentWeather}
+            favoritesCitiesList.push(newFavoriteCity)
+            dispatch(setFavoritesCitiesListAC(favoritesCitiesList))
+            dispatch(setIsAddedToFavoritesAC(true))
         }
 
         const removeFromFavorites = () => {
-            const newFavoritesCities = favoritesCitiesList.filter((city: { cityName: string, cityKey: string }) => {
-                return city.cityName !== currentCity.name
+            const newLocalStorageFavoritesCities =
+                localStorageFavoritesCitiesList.filter((city: { cityName: string, cityKey: string }) => {
+                    return city.cityName !== currentCity.name
+                })
+            localStorage.setItem('cities', JSON.stringify(newLocalStorageFavoritesCities));
+            const newFavoritesCities = favoritesCitiesList.filter((city: {
+                name: string,
+                currentWeather: CurrentWeatherDataType
+            }) => {
+                return city.name !== currentCity.name
             })
-            localStorage.setItem('cities', JSON.stringify(newFavoritesCities));
-            setIsAddedToFavorites(false)
+            dispatch(setFavoritesCitiesListAC(newFavoritesCities))
+            dispatch(setIsAddedToFavoritesAC(false))
         }
 
-        console.log(currentWeather)
 
         return (
-            <div className={s.weatherBoard} style={{backgroundImage: `url(${backImage})`}}>
+            <div className={s.weatherBoard}
+                 style={{backgroundImage: theme ? `url(${backImage})` : `url(${backNightImage})`}}>
                 <Preloader loading={loading}/>
                 {currentWeather === null
                     ? <div></div>
@@ -72,11 +80,13 @@ const WeatherBoard = React.memo((props: typeProps) => {
                             <div>
                                 {!isAddedToFavorites
                                     ? <Button className={s.button_favorites}
+                                              style={{color: theme ? 'black' : 'darkgrey'}}
                                               variant="outlined"
                                               onClick={addToFavorites}>
                                         Add to favorites
                                     </Button>
                                     : <Button className={s.button_favorites}
+                                              style={{color: theme ? 'black' : 'darkgrey'}}
                                               variant="outlined"
                                               onClick={removeFromFavorites}>
                                         Remove from favorites

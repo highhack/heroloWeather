@@ -1,9 +1,9 @@
 @import './src/m1-ui/common/mixins';
 
 .favorites {
-  @include flex(column, flex-start, flex-start, wrap);
+  @include flex(column, flex-start, center, wrap);
   margin: 20px;
-  height: 100vh;
+  height: 90vh;
   border: 1px solid black;
   background: #f09c2d;
 
@@ -15,6 +15,11 @@
     @include flex(row, center, flex-start, wrap);
     width: 100%;
     margin: 10px 0;
+    cursor: pointer;
+    :hover {
+      transition: all 0.5s ease-in-out;
+      transform: scale(1.05, 1.05) ;
+    }
 
     .cityBox {
       min-width: 180px;
@@ -29,8 +34,13 @@
     }
   }
 
+  .empty_favorites_text {
+    margin: auto;
+    font-size: x-large;
+  }
+
   @media screen and (max-width: 700px) {
-    height: 100%;
+    min-height: 100vh;
   }
 
   @media screen and (max-width: 1200px) {

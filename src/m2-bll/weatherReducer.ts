@@ -1,23 +1,7 @@
 import {Dispatch} from 'redux'
 import {weatherAPI} from "../m3-dal/api";
-import {CityProps} from "../m1-ui/components/searchBox/citiesList/citiesList";
-
-export type InitialStateType = {
-    weather: WeatherDataType | null
-    searchError: boolean
-    textHelper: string
-    loadingStatus: LoadingStatusType
-    searchedCityList: Array<CityProps> | null
-    currentWeather: CurrentWeatherDataType | null
-    favoritesCitiesList: Array<{
-        name: string,
-        currentWeather: CurrentWeatherDataType
-    }> | Array<null>
-    currentCity: {
-        name: string,
-        key: string
-    }
-}
+import {CityProps} from "../m1-ui/components/searchBox/citiesList/CitiesList";
+import {CurrentWeatherDataType, InitialStateType, NewCitiesListType, WeatherDataType} from "../types";
 
 export type LoadingStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -29,10 +13,12 @@ const initialState = {
     searchedCityList: null,
     currentWeather: null,
     favoritesCitiesList: [],
+    isAddedToFavorites: false,
     currentCity: {
         name: 'Tel-Aviv',
         key: '215805'
-    }
+    },
+    theme: true
 } as InitialStateType
 
 export const weatherReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -52,8 +38,11 @@ export const weatherReducer = (state: InitialStateType = initialState, action: A
         case 'SET-CURRENT-CITY':
             return {...state, currentCity: action.currentCity}
         case 'SET-FAVORITE-LIST':
-             let a = {...state, favoritesCitiesList: action.favoritesCitiesList}
-             return a
+            return {...state, favoritesCitiesList: [...action.favoritesCitiesList]}
+        case 'SET-IS-ADDED-TO-FAVORITES':
+            return {...state, isAddedToFavorites: action.isAddedToFavorites}
+        case 'SET-THEME':
+            return {...state, theme: action.theme}
         default:
             return state
     }
@@ -61,31 +50,28 @@ export const weatherReducer = (state: InitialStateType = initialState, action: A
 
 // actions
 export const setWeatherAC = (weather: WeatherDataType | null) => ({type: 'SET-WEATHER', weather} as const)
+export const setIsAddedToFavoritesAC = (isAddedToFavorites: boolean) => ({
+    type: 'SET-IS-ADDED-TO-FAVORITES', isAddedToFavorites
+} as const)
 export const setCurrentWeatherAC = (currentWeather: CurrentWeatherDataType | null) => ({
-    type: 'SET-CURRENT-WEATHER',
-    currentWeather
+    type: 'SET-CURRENT-WEATHER', currentWeather
 } as const)
 export const setSearchErrorAC = (searchError: boolean) => ({type: 'SET-SEARCH-ERROR', searchError} as const)
 export const setCurrentCityNameAC = (currentCity: { name: string, key: string }) => ({
-    type: 'SET-CURRENT-CITY',
-    currentCity
+    type: 'SET-CURRENT-CITY', currentCity
 } as const)
 export const setTextHelperAC = (textHelper: string) => ({type: 'SET-TEXT-HELPER', textHelper} as const)
 export const setSearchedCityListAC = (searchedCityList: Array<CityProps> | null) => ({
-    type: 'SET-SEARCHED-CITY-LIST',
-    searchedCityList
+    type: 'SET-SEARCHED-CITY-LIST', searchedCityList
 } as const)
 export const setLoadingStatusAC = (loadingStatus: LoadingStatusType) => ({
-    type: 'SET-LOADING-STATUS',
-    loadingStatus
+    type: 'SET-LOADING-STATUS', loadingStatus
 } as const)
-export const favoritesCitiesListAC = (favoritesCitiesList: Array<{
-    name: string,
-    currentWeather: CurrentWeatherDataType
-}>) => ({
-    type: 'SET-FAVORITE-LIST',
-    favoritesCitiesList
+export const setFavoritesCitiesListAC = (favoritesCitiesList: Array<{
+    name: string, currentWeather: CurrentWeatherDataType }>) => ({
+    type: 'SET-FAVORITE-LIST', favoritesCitiesList
 } as const)
+export const setThemeAC = (theme: boolean) => ({type: 'SET-THEME', theme} as const)
 
 
 // thunks
@@ -145,6 +131,23 @@ export const setCitiesListTC = (writtenCity: string) => {
     }
 }
 
+export const getFavoritesCitiesTC = (favoritesCitiesList: { cityName: string, cityKey: string }[]) => {
+    return async (dispatch: ThunkDispatch) => {
+        let newCitiesList: NewCitiesListType = []
+        dispatch(setLoadingStatusAC('loading'))
+        for (let city of favoritesCitiesList) {
+            await weatherAPI.getCurrentWeatherByCity(city.cityKey).then((res) => {
+                newCitiesList.push({name: city.cityName, key: city.cityKey, currentWeather: res.data})
+            })
+        }
+        Promise.all(newCitiesList).then(() => {
+            dispatch(setFavoritesCitiesListAC(newCitiesList))
+            dispatch(setLoadingStatusAC('succeeded'))
+        })
+    }
+
+}
+
 
 // types
 export type setWeatherACType = ReturnType<typeof setWeatherAC>;
@@ -154,7 +157,9 @@ export type setTextHelperACType = ReturnType<typeof setTextHelperAC>;
 export type setLoadingStatusACType = ReturnType<typeof setLoadingStatusAC>;
 export type setSearchedCityListType = ReturnType<typeof setSearchedCityListAC>;
 export type setCurrentCityNameType = ReturnType<typeof setCurrentCityNameAC>;
-export type favoritesCitiesListType = ReturnType<typeof favoritesCitiesListAC>;
+export type setFavoritesCitiesListType = ReturnType<typeof setFavoritesCitiesListAC>;
+export type setIsAddedToFavoritesType = ReturnType<typeof setIsAddedToFavoritesAC>;
+export type setThemeType = ReturnType<typeof setThemeAC>;
 type ActionsType =
     | setWeatherACType
     | setSearchErrorACType
@@ -163,76 +168,10 @@ type ActionsType =
     | setSearchedCityListType
     | setCurrentWeatherACType
     | setCurrentCityNameType
-    | favoritesCitiesListType
+    | setFavoritesCitiesListType
+    | setIsAddedToFavoritesType
+    | setThemeType
 
 type ThunkDispatch = Dispatch<ActionsType>
 
-export type WeatherDataType = {
-    "Headline": {
-        "EffectiveDate": string,
-        "EffectiveEpochDate": number,
-        "Severity": number,
-        "Text": string,
-        "Category": string,
-        // "EndDate": null,
-        // "EndEpochDate": null,
-        "MobileLink": string,
-        "Link": string
-    },
-    "DailyForecasts": Array<listData>
-}
 
-export type listData = {
-    "Date": string,
-    "Day": {
-        HasPrecipitation: boolean,
-        Icon: number
-        IconPhrase: string,
-        PrecipitationIntensity: string,
-        PrecipitationType: string
-    },
-    Night: {
-        HasPrecipitation: boolean,
-        Icon: number,
-        IconPhrase: string
-    }
-    "EpochDate": number,
-    "Temperature": {
-        "Minimum": {
-            "Value": number,
-            "Unit": string,
-            "UnitType": number
-        },
-        "Maximum": {
-            "Value": number,
-            "Unit": string,
-            "UnitType": number
-        }
-    }
-}
-
-export type CurrentWeatherDataType = [
-    {
-        "LocalObservationDateTime": string,
-        "EpochTime": number,
-        "WeatherText": string,
-        "WeatherIcon": number,
-        "HasPrecipitation": boolean,
-        // "PrecipitationType": null,
-        "IsDayTime": boolean,
-        "Temperature": {
-            "Metric": {
-                "Value": number,
-                "Unit": string,
-                "UnitType": number
-            },
-            "Imperial": {
-                "Value": number,
-                "Unit": string,
-                "UnitType": number
-            }
-        },
-        "MobileLink": string,
-        "Link": string
-    }
-]
