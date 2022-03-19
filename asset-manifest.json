@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/heroloWeather/static/css/main.7b93f71d.css",
-    "main.js": "/heroloWeather/static/js/main.01994328.js",
+    "main.css": "/heroloWeather/static/css/main.391a52a7.css",
+    "main.js": "/heroloWeather/static/js/main.d59464be.js",
     "static/js/787.28cb0dcd.chunk.js": "/heroloWeather/static/js/787.28cb0dcd.chunk.js",
-    "static/media/IuF.gif": "/heroloWeather/static/media/IuF.9bb8d41ea9e4e224bb4c.gif",
+    "static/media/news.gif": "/heroloWeather/static/media/news.9bb8d41ea9e4e224bb4c.gif",
+    "static/media/night.gif": "/heroloWeather/static/media/night.82da8d2384a7dd037705.gif",
     "static/media/background3.gif": "/heroloWeather/static/media/background3.32d6062ca19ec5988240.gif",
     "static/media/loading.gif": "/heroloWeather/static/media/loading.b2200a87e13d287e2b58.gif",
     "static/media/loading1.gif": "/heroloWeather/static/media/loading1.b2a8fa3d8baba9fc720f.gif",
@@ -11,12 +12,12 @@
     "static/media/clouds.png": "/heroloWeather/static/media/clouds.a91c94c2da8c6a7f3dfa.png",
     "static/media/darkClouds.png": "/heroloWeather/static/media/darkClouds.55987e94b8fd660bfff0.png",
     "index.html": "/heroloWeather/index.html",
-    "main.7b93f71d.css.map": "/heroloWeather/static/css/main.7b93f71d.css.map",
-    "main.01994328.js.map": "/heroloWeather/static/js/main.01994328.js.map",
+    "main.391a52a7.css.map": "/heroloWeather/static/css/main.391a52a7.css.map",
+    "main.d59464be.js.map": "/heroloWeather/static/js/main.d59464be.js.map",
     "787.28cb0dcd.chunk.js.map": "/heroloWeather/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7b93f71d.css",
-    "static/js/main.01994328.js"
+    "static/css/main.391a52a7.css",
+    "static/js/main.d59464be.js"
   ]
 }
